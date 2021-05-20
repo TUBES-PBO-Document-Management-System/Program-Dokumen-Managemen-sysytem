@@ -25,6 +25,7 @@ class managemen_dokumen :
         self.ID_Dokumen = 1
         mantopik = managemen_topik()
         mangori = managemen_kategori()
+        
         if mangori.cekprimary(self.ID_Kategori) or mantopik.cekprimary(self.ID_Topik) : 
             self.insert()
         elif not mangori.cekprimary(self.ID_Kategori) :
@@ -54,12 +55,12 @@ class managemen_dokumen :
         db.commit()
         print("{} data berhasil di Update".format(cursor.rowcount))
 
-    
     def show (self) :
         cursor = db.cursor()
         sql = "select ID_Dokumen,kategori.Nama,tema.Tema,Folder_Penyimpanan,Tag,Nama_File from (dokumen natural join tema) join kategori where dokumen.ID_Kategori = kategori.ID_Kategori  "
         cursor.execute(sql)
         results = cursor.fetchall()
+
         if cursor.rowcount <= 0:
             print("Tidak ada data")
         else:
@@ -92,7 +93,6 @@ class managemen_dokumen :
             return False
 
 class managemen_kategori :
-    
     def __init__(self) :
         self.nama = str()
         self.ID_Kategori = int()
@@ -123,7 +123,6 @@ class managemen_kategori :
         cursor.execute(sql)
         db.commit()
         print("{} data berhasil di Update".format(cursor.rowcount))
-
 
     def show (self) :
         cursor = db.cursor()
@@ -156,8 +155,7 @@ class managemen_kategori :
         else :
             return False
     
-class managemen_topik :
-    
+class managemen_topik :    
     def __init__(self) :
         self.tema = str()
         self.Folder_Penyimpanan = str()
@@ -259,7 +257,6 @@ def menu() :
                 sleep(3)
                 os.system('cls')
 
-
         elif pilihan == 2 :
             pilihan2 = 0
             while pilihan2 <= 5 :
@@ -312,8 +309,5 @@ def menu() :
                 os.system('cls')   
         else :
             print("Jawaban Anda Tidak Sesuai, Anda akan kembali ke menu.")
-
-
-
 
 menu()
