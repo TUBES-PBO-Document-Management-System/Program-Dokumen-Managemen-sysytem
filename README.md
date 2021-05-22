@@ -312,7 +312,7 @@ def menu() :
                 sleep(3)
                 os.system('cls')   
         else :
-            print("Jawaban Anda Tidak Sesuai, Anda akan kembali ke menu.")
+            print("Jawaban Anda tidak sesuai, Anda akan kembali ke menu.")
 
 
 
