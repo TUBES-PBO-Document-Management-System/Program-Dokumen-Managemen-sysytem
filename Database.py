@@ -1,6 +1,6 @@
 import mysql.connector
 import os
-from time import sleep
+import msvcrt as m
 
 # Sintak untuk menghubungkan dengan database
 db = mysql.connector.connect(
@@ -283,7 +283,8 @@ def menu() :
                     print (" Berikut List Kategori \t")
                     kategori.show()
                     print (" Berikut List Tema \t")
-                    tema.show()
+                    topik.show()
+                    print("\t")
                     dokumen.input(int(input("Masukan ID_Kategori : " )), int(input("Masukan ID_Topik : ")), str(input("Masukukan Tag :")), str(input("Masukan Nama Dokumen : "))) 
                 elif pilihan1 == 3 :
                     dokumen.update(int(input("Masukan ID yang ingin di uodate : ")))
@@ -291,7 +292,7 @@ def menu() :
                     dokumen.delete(int(input("Masukan ID data yang ingin dihapus : ")))
                 elif pilihan1 == 5 :
                     dokumen.deleteAll()
-                sleep(3)
+                m.getch()
                 os.system('cls')
 
         elif pilihan == 2 :
@@ -319,7 +320,7 @@ def menu() :
                     topik.delete(int(input("Masukan ID data yang ingin dihapus : ")))
                 elif pilihan2 == 5 :
                     topik.deleteAll()
-                sleep(3)
+                m.getch()
                 os.system('cls')
 
         elif pilihan == 3 :
@@ -342,7 +343,7 @@ def menu() :
                     kategori.delete(int(input("Masukan ID data yang ingin dihapus : ")))
                 elif pilihan3 == 5 :
                     kategori.deleteAll()
-                sleep(3)
+                m.getch()
                 os.system('cls')   
         else :
             print("Jawaban Anda Tidak Sesuai, Anda akan kembali ke menu.")
