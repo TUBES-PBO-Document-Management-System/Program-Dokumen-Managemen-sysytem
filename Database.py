@@ -2,14 +2,18 @@ import mysql.connector
 import os
 from time import sleep
 
+# Sintak untuk menghubungkan dengan database
 db = mysql.connector.connect(
   host="localhost",
   user="root",
   passwd="",
   database="db_dokumen"
 )
+
+# Merupakan Kelas Dokumen
 class managemen_dokumen :
-    
+  
+    # Prosedur yang dijalankan pertama kali, dan menginisiasi objek
     def __init__(self):
         self.nama = str()
         self.ID_Kategori = int()
@@ -17,6 +21,7 @@ class managemen_dokumen :
         self.ID_Dokumen = int()
         self.tag = str()
     
+    # Prosedur Untuk menginputkan data dokumen
     def input (self,kategori,topik,tag,nama):
         self.nama = nama
         self.ID_Kategori = kategori
@@ -26,6 +31,7 @@ class managemen_dokumen :
         mantopik = managemen_topik()
         mangori = managemen_kategori()
         
+        # Mengecek apakah ID Topik dan ID Kategori tersedia di database atau tidak
         if mangori.cekprimary(self.ID_Kategori) or mantopik.cekprimary(self.ID_Topik) : 
             self.insert()
         elif not mangori.cekprimary(self.ID_Kategori) :
@@ -33,20 +39,23 @@ class managemen_dokumen :
         else :
             print(" Tema Topik Tidak ada ")
     
+    # Prosedur untuk menghapus semua Data Dokumen yang ada di database MySql
     def deleteAll (self) :
         cursor = db.cursor()
         sql = "Delete from dokumen "
         cursor.execute(sql)
         db.commit()
         print("{} data berhasil dihapus".format(cursor.rowcount))
-
+    
+    # Prosedur untuk menghapus record data dokumen sesuai dengan ID Dokumen 
     def delete (self, ID) :
         cursor = db.cursor()
         sql = "Delete from dokumen where ID_Dokumen = %s " % (ID)
         cursor.execute(sql)
         db.commit()
         print("{} data berhasil dihapus".format(cursor.rowcount))
-
+    
+    # Prosedur untuk mengedit data Dokumen yang ada di database
     def update (self, ID) :
         namabaru = str(input("Masukan Nama Baru : "))
         cursor = db.cursor()
@@ -54,7 +63,8 @@ class managemen_dokumen :
         cursor.execute(sql)
         db.commit()
         print("{} data berhasil di Update".format(cursor.rowcount))
-
+    
+    # Prosedur untuk menampilkan semua data Dokumen yang ada di database MySql
     def show (self) :
         cursor = db.cursor()
         sql = "select ID_Dokumen,kategori.Nama,tema.Tema,Folder_Penyimpanan,Tag,Nama_File from (dokumen natural join tema) join kategori where dokumen.ID_Kategori = kategori.ID_Kategori  "
@@ -71,7 +81,8 @@ class managemen_dokumen :
                     if j != len(results[0])-3 :
                         print(end = "\t")
                 print()
-
+    
+    # Prosedur untuk menambahkan Data Dokumen baru ke database MySql
     def insert(self) :
         while self.cekprimary() :
             self.ID_Dokumen += 1
@@ -81,7 +92,8 @@ class managemen_dokumen :
         cursor.execute(sql, val)
         db.commit()
         print("{} data berhasil disimpan".format(cursor.rowcount))
-
+    
+    # Prosedur untuk menegcek apakah ID Dokumen tersedia, atau tidak.
     def cekprimary(self):
         cursor = db.cursor()
         sql = """select * from dokumen where ID_Dokumen = (%s) """   % (self.ID_Dokumen)
@@ -92,30 +104,37 @@ class managemen_dokumen :
         else :
             return False
 
+# Merupalan Kelas dari Kategori
 class managemen_kategori :
+  
+    # Prosedur yang paling pertama di eksekusi, Merupakan inisiasi awal objek kategori
     def __init__(self) :
         self.nama = str()
         self.ID_Kategori = int()
 
+    # Prosedur untuk menginputkan data kategori 
     def input (self, nama) :
         self.nama = nama
         self.ID_Kategori = 1
         self.insert()
     
+    # Prosedur untuk menghapus semua record data kategori yang ada di database MySql
     def deleteAll (self) :
         cursor = db.cursor()
         sql = "Delete from kategori "
         cursor.execute(sql)
         db.commit()
         print("{} data berhasil dihapus".format(cursor.rowcount))
-
+    
+    # Prosedur untuk menghapus kategori sesuai dengan ID kategori yang dikirimkan
     def delete (self, ID) :
         cursor = db.cursor()
         sql = "Delete from kategori where ID_Kategori = %s " % (ID)
         cursor.execute(sql)
         db.commit()
         print("{} data berhasil dihapus".format(cursor.rowcount))
-
+    
+    # Prosedur untuk Mengupdate nama kategori yang ada di database MySql
     def update (self, ID) :
         namabaru = str(input("Masukan Nama Baru : "))
         cursor = db.cursor()
@@ -123,7 +142,8 @@ class managemen_kategori :
         cursor.execute(sql)
         db.commit()
         print("{} data berhasil di Update".format(cursor.rowcount))
-
+    
+    # Prosedur untuk menampilkan semua record kategori yang ada di database MySql
     def show (self) :
         cursor = db.cursor()
         sql = "select * from kategori"
@@ -134,7 +154,8 @@ class managemen_kategori :
         else:
             for data in results:
                 print(data)
-
+    
+    # Prosedur untuk menambahkan data Kategori kedalam database MySql
     def insert(self) :
         while self.cekprimary(self.ID_Kategori) :
             self.ID_Kategori += 1
@@ -144,7 +165,8 @@ class managemen_kategori :
         cursor.execute(sql, val)
         db.commit()
         print("{} data berhasil disimpan".format(cursor.rowcount))
-
+  
+    # Prosedur untuk mengecek apakah ID kategori yang di maksud tersedia didalam database.
     def cekprimary(self, ID):
         cursor = db.cursor()
         sql = """select * from kategori where ID_Kategori = (%s) """   % (ID)
@@ -154,33 +176,40 @@ class managemen_kategori :
             return True
         else :
             return False
-    
-class managemen_topik :    
+
+# Merupakan kelas dari Topik
+class managemen_topik :
+  
+    # prosedur pertama kali yang dijalankan, untuk inisiasi objek awal
     def __init__(self) :
         self.tema = str()
         self.Folder_Penyimpanan = str()
         self.ID_Topik = int()
-
+    
+    # prosedur untuk menginputkan topik baru
     def input (self, tema, Folder_Penyimpanan) :
         self.tema = tema
         self. Folder_Penyimpanan = Folder_Penyimpanan
         self.ID_Topik = 1
         self.insert()
-
+    
+    # Prosedur untuk menghapus semua record dari data topik
     def deleteAll (self) :
         cursor = db.cursor()
         sql = "Delete from tema "
         cursor.execute(sql)
         db.commit()
         print("{} data berhasil dihapus".format(cursor.rowcount))
-
+    
+    # Prosedur untuk menghapus record topik sesuai dengan ID yang dikirimkan.
     def delete (self, ID) :
         cursor = db.cursor()
         sql = "Delete from tema where ID_Topik = %s " % (ID)
         cursor.execute(sql)
         db.commit()
         print("{} data berhasil dihapus".format(cursor.rowcount))
-
+    
+    # prosedur untuk mngupdate nama topik sesuai dengan ID yang dikirimkan
     def update (self, ID, conteks) :
         namabaru = str(input("Masukan Nama Baru : "))
         cursor = db.cursor()
@@ -188,7 +217,8 @@ class managemen_topik :
         cursor.execute(sql)
         db.commit()
         print("{} data berhasil di Update".format(cursor.rowcount))
-
+    
+    # Prosedur untuk menampilkan seluruh data record topik yang ada pada database MySql
     def show (self) :
         cursor = db.cursor()
         sql = "select * from tema"
@@ -199,7 +229,8 @@ class managemen_topik :
         else:
             for data in results:
                 print(data)
-
+    
+    # Prosedur untuk menambahkan data baru kedalam tabel Topik di database MySql
     def insert(self) :
         while self.cekprimary(self.ID_Topik) :
             self.ID_Topik += 1
@@ -209,7 +240,8 @@ class managemen_topik :
         cursor.execute(sql, val)
         db.commit()
         print("{} data berhasil disimpan".format(cursor.rowcount))
-
+    
+    # Prosedur untuk cek ID topik apakah tersedia di database atau tidak
     def cekprimary(self, ID):
         cursor = db.cursor()
         sql = """select * from tema where ID_Topik = (%s) """   % (ID)
@@ -220,6 +252,7 @@ class managemen_topik :
         else :
             return False
 
+# Fungsi utama yang di eksekusi sebagai interface utama.
 def menu() :
     print("Selamat Datang Di Dokumen Managemen System")
     dokumen = managemen_dokumen()
@@ -265,7 +298,7 @@ def menu() :
                 print("3. Mengedit Topik Yang Sudah Ada")
                 print("4. Menghapus Topik Yang Dipilih")
                 print("5. Menghapus Seluruh Topik")
-                print("7. Kembali Ke Menu")
+                print("6. Kembali Ke Menu")
                 pilihan2=int(input("Silakan Masukan Pilihan Anda : "))
                 if pilihan2 == 1 :
                     topik.show()
@@ -293,7 +326,7 @@ def menu() :
                 print("3. Mengedit Kategori Yang Sudah Ada")
                 print("4. Menghapus Kategori Yang Dipilih")
                 print("5. Menghapus Seluruh kategori")
-                print("7. Kembali Ke Menu")
+                print("6. Kembali Ke Menu")
                 pilihan3=int(input("Silakan Masukan Pilihan Anda : "))
                 if pilihan3 == 1 :
                     kategori.show()
