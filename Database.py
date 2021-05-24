@@ -280,6 +280,10 @@ def menu() :
                 if pilihan1 == 1 :
                     dokumen.show()
                 elif pilihan1 == 2 :
+                    print (" Berikut List Kategori \t")
+                    kategori.show()
+                    print (" Berikut List Tema \t")
+                    tema.show()
                     dokumen.input(int(input("Masukan ID_Kategori : " )), int(input("Masukan ID_Topik : ")), str(input("Masukukan Tag :")), str(input("Masukan Nama Dokumen : "))) 
                 elif pilihan1 == 3 :
                     dokumen.update(int(input("Masukan ID yang ingin di uodate : ")))
