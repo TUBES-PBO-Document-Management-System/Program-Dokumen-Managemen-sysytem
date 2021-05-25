@@ -311,7 +311,7 @@ def menu() :
                     topik.input(str(input("Masukan Tema : ")),str(input("Masukan Lokasi Folder Penyimpanan : ")))
                 elif pilihan2 == 3 :
                     print("1. Mengganti Topik\n2. Mengganti Folder Penyimpanan")
-                    pilihanupdate = int(input("Masukan Pilahan Mu : "))
+                    pilihanupdate = int(input("Masukan Pilihanmu : "))
                     if pilihanupdate == 1 : 
                         topik.update(int(input("Masukan ID yang ingin di update : ")), "Tema")
                     elif pilihanupdate == 2 :
