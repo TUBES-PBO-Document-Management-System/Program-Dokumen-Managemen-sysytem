@@ -35,9 +35,9 @@ class managemen_dokumen :
         if mangori.cekprimary(self.ID_Kategori) or mantopik.cekprimary(self.ID_Topik) : 
             self.insert()
         elif not mangori.cekprimary(self.ID_Kategori) :
-            print("Tidak ada Kategori")
+            print("Tidak ada kategori")
         else :
-            print(" Tema Topik Tidak ada ")
+            print(" Tema topik tidak ada ")
     
     # Prosedur untuk menghapus semua Data Dokumen yang ada di database MySql
     def deleteAll (self) :
@@ -82,7 +82,7 @@ class managemen_dokumen :
                         print(end = "\t")
                 print()
     
-    # Prosedur untuk menambahkan Data Dokumen baru ke database MySql
+    # Prosedur untuk menambahkan data dokumen baru ke database MySql
     def insert(self) :
         while self.cekprimary() :
             self.ID_Dokumen += 1
