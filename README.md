@@ -1,8 +1,8 @@
 Deskripsi Produk :
 
-Aplikasi ini merupakan aplikasi yang dibangun dengan bahasa python, dan terintegrasi dengan MySql.
-Aplikasi dapat menambahkan topik, dan kategori dengan ID masing masing otomatis di generate.
-Aplikasi ini dapat menambahkan properties dokumen dan terhubung dengan MySql.
+Aplikasi ini merupakan aplikasi yang dibangun dengan bahasa python, dan terintegrasi dengan database MySql.
+Aplikasi ini dapat menambahkan topik, dan dengan kategori ID masing masing otomatis di generate.
+Aplikasi ini dapat menambahkan properties dokumen dan terhubung dengan database MySql.
 
 Prosedur Menjalankan Program .
 
@@ -20,4 +20,4 @@ Tata Cara :
 4. Jika error karena belum ada modul mysql.connector, maka silakan di instal melalui cmd python dengan mengetikan "install mysql.connector", lalu jalankan ulang.
 5. Setelah itu program akan berjalan.
 
-Sekian, Terima kasih.
+Sekian, dan Terima kasih.
